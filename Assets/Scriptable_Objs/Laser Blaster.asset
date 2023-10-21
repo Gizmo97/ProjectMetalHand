@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b51dfed23440d94790a27ab38cc9c89, type: 3}
+  m_Name: Laser Blaster
+  m_EditorClassIdentifier: 
+  name: Laser Blaster
+  subName: Laser Minigun
+  description: Laser weapon
+  currentXp: 0
+  xpToLevel2: 100
+  xpToLevel3: 500
+  xpToLevel4: 2000
+  xpToLevel5: 10000
+  level: 1
+  damage: 25
+  fireRate: 1
+  range: 75
+  maxAmmo: 100
+  currentAmmo: 100
+  picture: {fileID: 21300000, guid: 32db3a7d5ab8c2048817d43b6ba19be0, type: 3}
