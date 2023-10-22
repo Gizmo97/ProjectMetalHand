@@ -7,7 +7,7 @@ public class gunscript : MonoBehaviour
     public Transform firePoint;
     public LineRenderer line;
     public GameObject shoot;
-    public GameObject osuma;
+    public GameObject impact;
     public float range = 100f;
     public float fireRate = 5f;
     public int damage = (int)100f;
@@ -36,8 +36,8 @@ public class gunscript : MonoBehaviour
             }
             if (enemy == null)
                 {
-                GameObject impact = Instantiate(osuma, hit.point, Quaternion.LookRotation(hit.normal));
-                Destroy(impact, 2.5f);
+                GameObject impact2 = Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
+                Destroy(impact2, 2.5f);
                 }
             destructive dest = hit.transform.GetComponent<destructive>();
             if (dest != null)
