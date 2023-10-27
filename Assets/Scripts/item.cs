@@ -10,24 +10,27 @@ public class item : MonoBehaviour
 
     public void Update()
     {
-        Collider[] follow = Physics.OverlapSphere(transform.position, 6f);
-
-        foreach (Collider nearbyObject in follow)
+        if (rb != null && boxcollider != null)
         {
-            PlayerMove player = nearbyObject.GetComponent<PlayerMove>();
-            if (player != null)
+            Collider[] follow = Physics.OverlapSphere(transform.position, 6f);
+
+            foreach (Collider nearbyObject in follow)
             {
-                boxcollider.enabled = false;
-                rb.useGravity = false;
-                Vector3 a = transform.position;
-                Vector3 b = player.transform.position;
-                transform.position = Vector3.Lerp(a, b, 0.1f);
-            }
-            else
-            {
-                boxcollider.enabled = true;
-                rb.useGravity = true;
-            }
+                PlayerMove player = nearbyObject.GetComponent<PlayerMove>();
+                if (player != null)
+                {
+                    boxcollider.enabled = false;
+                    rb.useGravity = false;
+                    Vector3 a = transform.position;
+                    Vector3 b = player.transform.position;
+                    transform.position = Vector3.Lerp(a, b, 0.1f);
+                }
+                else
+                {
+                    boxcollider.enabled = true;
+                    rb.useGravity = true;
+                }
+            }        
         }
     }
     void OnTriggerEnter(Collider other)

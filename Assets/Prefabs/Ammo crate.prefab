@@ -75,7 +75,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destVersion: {fileID: 1190236162483314334, guid: 9e0eafbd5e1183b4293435b26923bd7b, type: 3}
-  inside: {fileID: 8825108731306374846, guid: 52347dd73a1164c449ede5b78e3b9466, type: 3}
+  inside: {fileID: 8607071660430689573, guid: 311259afb33c8d744bd3fb791bbf01ca, type: 3}
   hp: 1
 --- !u!65 &4817342933578024771
 BoxCollider:
