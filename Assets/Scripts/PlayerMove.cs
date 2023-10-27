@@ -1,67 +1,59 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerMove : MonoBehaviour
 {
     public CharacterController characterController;
     public Transform cam;
-    public Text UI;
-    public int money;
+    public Rigidbody rbody;
 
-    public float nopeus = 7f;
-    public float gravity = -9.81f;
-    public float jumpHeight = 3f;
-
-    public Transform groundCheck;
-    public float groundDistance = 0.4f;
-    public LayerMask groundMask;
-
+    [Header("PLAYER SETTINGS")]
+    public Vector3 moveVector;
+    public Vector2 turnVector;
     public float turnSmoothTime = 0.1f;
     float turnSmoothvelocity;
+    public float walkSpeed = 7f;
+    public float jumpHeight = 3f;
 
-    Vector3 velocity;
+    [Header("GROUND CHECK")]
+    public Transform groundCheck;
+    public float groundDistance = 0.4f;
+    public LayerMask groundMask;   
     bool isGrounded;
-
-    public void GetMoney(int amount)
-    {
-        money += amount;
-    }
+   
     void Update()
     {
-        UI.text = money.ToString();
-
         if (Input.GetKey(KeyCode.LeftShift))
         {
             transform.rotation = cam.transform.rotation;
         }
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        if(isGrounded && velocity.y < 0)
+        
+        //storing input, I cleaned this up.
+        moveVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
+                
+        //THIS IS THE MAGIC, SO FAR
+        if (moveVector != Vector3.zero)
         {
-            velocity.y = -2f;
-        }
-        if(Input.GetButtonDown("Jump") && isGrounded)
-        {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-        }
-
-        float Horizontal = Input.GetAxisRaw("Horizontal");
-        float Vertical = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(Horizontal, 0f, Vertical).normalized;
-
-        velocity.y += gravity * Time.deltaTime;
-
-        characterController.Move(velocity * Time.deltaTime);
-
-        if (direction.magnitude >= 0.1f)
-        {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            float targetAngle = Mathf.Atan2(moveVector.x, moveVector.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothvelocity, turnSmoothTime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
             Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            characterController.Move(moveDirection.normalized * nopeus * Time.deltaTime);
+            characterController.Move(moveDirection.normalized * walkSpeed * Time.deltaTime);
+        }
+    }
+
+    public void GroundCheck() 
+    {
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+    }
+
+    public void Jumping() 
+    {
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            rbody.AddForce(transform.up * jumpHeight, ForceMode.Impulse);
         }
     }
 }
