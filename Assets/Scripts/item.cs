@@ -39,7 +39,7 @@ public class item : MonoBehaviour
         if(player != null)
         {
             Destroy(gameObject);
-            player.GetMoney(amount);
+            // player.GetMoney(amount);
         }
     }
 }
